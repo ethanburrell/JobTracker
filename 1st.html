@@ -1,0 +1,98 @@
+<html>
+<body>
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<div id="sankey_multiple" style="width: 900px; height: 300px;"></div>
+
+<script type="text/javascript">
+  google.charts.load("current", {packages:["sankey"]});
+  google.charts.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'From');
+    data.addColumn('string', 'To');
+    data.addColumn('number', 'Weight');
+
+    data.addRows([
+      //Stessa
+
+      ["Slack","No Response",1],
+      ["Airbnb","No Response",1],
+      ["Allstate","Received",1],
+
+      ["LiveRamp","Coding Challenge",1],
+      ["Coding Challenge","Phone screen",1],
+      ["Phone screen","Denied",1],
+
+      ["Gap","No Response",1],
+      ["Asana","No Response",1],
+
+      ["LendingHome","Coding Challenge",1],
+      ["Coding Challenge","Denied",1],
+      ["Meraki","No Response",1],
+      ["Dropbox","No Response",1],
+
+      ["NerdWallet","No Response",1],
+      ["Plato","No Response",1],
+      ["Twitter","Coding Challenge",1],
+      ["Coding Challenge","No Response",1],
+
+      ["Splunk","No Response",1],
+      ["Facebook","No Response",1],
+      ["Square","No Response",1],
+      ["3M","No Response",1],
+
+      ["AppLovin","No Response",1],
+      ["Goldman","Coding Challenge",1],
+
+      ["Coding Challenge","Denied",1],
+
+      ["Google","Coding Challenge",1],
+      ["Coding Challenge","Denied",1],
+
+      ["Stessa","Phone screen",1],
+      ["Phone screen","On-site",1],
+      ["On-site","Denied",1]
+
+
+/*
+[ 'Stessa', 'Phone Screen 1', 1 ],
+[ 'Phone Screen 1', 'On-Site', 1 ],
+[ 'On-Site', 'Denied', 1 ],
+// LiveRamp
+[ 'LiveRamp', 'Coding Challenge', 1 ],
+[ 'Coding Challenge', 'Phone Screen 1', 1 ],
+[ 'Phone Screen 1', 'Denied', 1 ],
+// LendingHome
+[ 'LendingHome', 'Coding Challenge', 1 ],
+[ 'Coding Challenge', 'Denied', 1 ],
+*/
+
+
+    ]);
+    /*
+    [ 'Stessa', 'Phone Screen 1', 1 ],
+    [ 'Phone Screen 1', 'On-Site', 1 ],
+    [ 'On-Site', 'Denied', 1 ],
+    // LiveRamp
+    [ 'LiveRamp', 'Coding Challenge', 1 ],
+    [ 'Coding Challenge', 'Phone Screen 1', 1 ],
+    [ 'Phone Screen 1', 'Denied', 1 ],
+    // LendingHome
+    [ 'LendingHome', 'Coding Challenge', 1 ],
+    [ 'Coding Challenge', 'Denied', 1 ],
+    */
+
+    // Set chart options
+    var options = {
+      width: 800,
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
+    chart.draw(data, options);
+   }
+</script>
+</body>
+</html>
