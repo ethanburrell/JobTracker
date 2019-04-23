@@ -1,0 +1,302 @@
+<html>
+<head>
+  <style>
+  body {
+    margin: 0 auto;
+    max-width: 50em;
+    font-family: "Helvetica", "Arial", sans-serif;
+    line-height: 1.5;
+    padding: 4em 1em;
+    color: #555;
+    }
+
+    h2 {
+      margin-top: 1em;
+      padding-top: 1em;
+    }
+
+    h1,
+    h2,
+    strong {
+      color: #333;
+    }
+
+    code,
+    pre {
+      background: #eee;
+    }
+
+    code {
+      padding: 2px 4px;
+      vertical-align: text-bottom;
+    }
+
+    pre {
+      padding: 1em;
+    }
+
+    a {
+      color: #e81c4f;
+    }
+
+    body {
+      color: #566b78;
+    }
+
+    code,
+    pre {
+      background: #f5f7f9;
+      border-bottom: 1px solid #d8dee9;
+      color: #a7adba;
+    }
+
+    pre {
+      border-left: 2px solid #69c;
+    }
+
+  </style>
+</head>
+<body>
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<h2> My Internship Search for Summer of 2019 </h2>
+<p>
+Hi, my name's Ethan Burrell, I'm a sophomore EECS student at UC Berkeley. Like all my peers,
+I was looking for a learning experience for my 13 week break from school from May to August
+and initially had great trouble finding a position at first.
+<br> <br>
+I started off the fall semester by attending carrer fairs and networking events where I would
+speak with recruiters and engineers from many very cool companies. At the end of these conversations
+(the contents of the conversations usually revolved around my projects) I would hand them my resume
+or they would ask for my email. I was over the moon when the latter happened, but realized something
+interesting: no one would email me back.
+<br> <br>
+As finals for Fall 2018 approached and I had only heard (decisisions and interviews/challenges) from a
+small subset of companies that I had applied to, I knew over the break I had to strategize on how to
+change the outcome of a simple application.
+<br> <br>
+During my break, I realized that I was just applying for every position I could find online, and maybe I
+should try and narrow down to companies that I had done relevant projects and research about. Here is where
+I learned a lot. I do research about the consequqnces of the hot housing climate of the Bay Area and decided
+to use this special knowledge for new companies to apply to. I found cool real-estate startups like Stessa,
+WayPoint, and LocateAI (among others), and decided to put my application in for their jobs. Here, the responses
+to my application went up dramatically. I also noticed if I wrote ~200 characters in the "Other Questions box",
+I would much more likely get a response. With this knowledge that there were interns needed in the real estate tech
+sector, I set off on interviews and my Spring Semester was off to an infinitely better start than the Fall one.
+<br> <br>
+I had always heard that interviewing is an art, and over the winter break I chose to read aricles and books on how to
+do this better. By talking to so many firms in such a short period of time, I was able to read recruiters reactions
+to my responses and fine tuned how my technical inspired interviews should have gone. Even though a lot of these companies
+maybe did not have the resources to take on an intern, just having the opportunity to be in a real phone interview helped me
+learn so much about the interviewing, recruitment, and technical screening processes.
+<br> <br>
+</p>
+<h2> The Graphs </h2>
+<p>
+I made some graphs over my winter break so that I could roughly see where I was failing in the interview process. At first
+it seemed like my initiial applicaiton would get no friction in the Application Tracking System, with some changes to my
+resume I was able to fix this. Later in the Spring semster, I was able to get more responses to my application, then I realized
+I needed to work on interviewing skills. This simple visualizer helped me spot some pitfalls in my self and helped me improve and learn
+as a job-seeker. Here's how the chart works:
+<br>
+The graph shows a flow from the initiial application (company name) to the next step of the application process. As you can see, a lot
+right to "Denied" (this process usually takes ~1-2 months). Other companies move to other categories, here's how we define them:
+<br> <br>
+<ul>
+<li> <strong> Coding Challenge: </strong> An online assignment that tested some techinal skill: algorithms, math, or system design </li>
+<li> <strong> Phone Screen: </strong> A call with a recruiter/engineer, I didn't keep track of how many I had for each company, just if I had one</li>
+<li> <strong> Follow up: </strong> If a company sent an email asking for more information or other events (not a call or a challenge)</li>
+<li> <strong> On-site: </strong> A meeting where I met a recruiter in person (usually at a companies HQ) </li>
+<li> <strong> Offer: </strong> A company offered me a position for the summer!!! Woohoo </li>
+<li> <strong> Withdrawal: </strong> I had recieved offers from companies that I prefered, so I withdrew my application from some companies </li>
+<li> <strong> Accepted: </strong> Signing the paperwork for the summer! </li>
+
+</p>
+
+
+
+</p>
+<div id="sankey_multiple" style="width: 100%; height: 100%;"></div>
+
+<script type="text/javascript">
+  google.charts.load("current", {packages:["sankey"]});
+  google.charts.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'From');
+    data.addColumn('string', 'To');
+    data.addColumn('number', 'Weight');
+
+    data.addRows([
+      //Stessa
+
+      ["Slack","No Response",1],
+      ["Airbnb","Denied",1],
+      ["Allstate","No Response",1],
+
+      ["LiveRamp","Coding Challenge",1],
+      ["Coding Challenge","Phone screen",1],
+      ["Phone screen","Denied",1],
+
+      ["Gap","No Response",1],
+      ["Asana","No Response",1],
+
+      ["Redfin","Follow up",1],
+      ["Follow up","Denied",1],
+
+      ["Zillow","Denied",1],
+
+      ["LendingHome","Coding Challenge",1],
+      ["Coding Challenge","Denied",1],
+      ["Meraki","No Response",1],
+      ["Dropbox","No Response",1],
+
+      ["NerdWallet","No Response",1],
+      ["Plato","No Response",1],
+      ["Twitter","Coding Challenge",1],
+      ["Coding Challenge","No Response",1],
+
+      ["Splunk","No Response",1],
+      ["Facebook","No Response",1],
+      ["Square","No Response",1],
+      ["3M","Denied",1],
+
+      ["AppLovin","No Response",1],
+      ["Walmart","No Response",1],
+
+      ["Goldman","Coding Challenge",1],
+
+      ["Coding Challenge","Denied",1],
+
+      ["Google","Coding Challenge",1],
+      ["Coding Challenge","Follow up",1],
+      ["Follow up","No Response",1],
+
+      ["Stessa","Phone screen",1],
+      ["Phone screen","On-site",1],
+      ["On-site","Denied",1],
+
+      ["Overstock","On-site",1],
+      ["On-site","No Response",1],
+
+      ["Oracle","Coding Challenge",1],
+      ["Coding Challenge","Phone screen",1],
+      ["Phone screen","No Response",1],
+
+      ["Go Daddy","Coding Challenge",1],
+      ["Coding Challenge","Phone screen",1],
+      ["Phone screen","Denied",1],
+
+      ["Keysight","Follow up",1],
+      ["Follow up","No Response",1],
+
+      ["CoreLogic","Follow up",1],
+      ["Follow up", "Denied", 1],
+
+      ["Nortek","Phone screen",1],
+      ["Phone screen", "No Response", 1],
+
+      ["Urban Footprint","Phone screen",1],
+      ["Phone screen", "Withdrawal", 1],
+
+      ["LocateAI","Coding Challenge",1],
+      ["Coding Challenge", "Phone screen", 1],
+      ["Phone screen", "On-site", 1],
+      ["On-site", "Denied", 1],
+
+      ["Juniper Square","Phone screen",1],
+      ["Phone screen","No Response",1],
+
+      ["HomeLight","Phone screen",1],
+      ["Phone screen","No Response",1],
+
+      ["Marlo","Phone screen",1],
+      ["Phone screen","Denied",1],
+
+      ["Digilock","On-site",1],
+      ["On-site","Offer",1],
+
+      ["WizeHire","Phone screen",1],
+      ["Phone screen","Offer",1],
+
+      ["Aurora Solar","Coding Challenge",1],
+      ["Coding Challenge","Denied",1],
+
+      ["WayPoint","Phone screen",1],
+      ["Phone screen","Offer",1],
+
+      ["Roostify","Coding Challenge",1],
+      ["Coding Challenge","Phone screen",1],
+      ["Phone screen", "Denied", 1],
+
+      ["AutoDesk","Phone screen",1],
+      ["Phone screen","Offer",1],
+      ["Offer", "Accepted", 1],
+
+    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
+    chart.draw(data, options);
+   }
+</script>
+
+<p>
+After creating that graph, I decided to aggregrate all of the different companies into one
+graph. This is what I found most useful to helping me improve my process.
+</p>
+
+<div id="sankey_general" style="width: 100%; height: 100%;"></div>
+
+<script type="text/javascript">
+  google.charts.load("current", {packages:["sankey"]});
+  google.charts.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'From');
+    data.addColumn('string', 'To');
+    data.addColumn('number', 'Weight');
+
+    data.addRows([
+      //Stessa
+      ["Applied", "No Response", 14],
+      ["Applied", "Phone screen", 3],
+      ["Applied", "Denied", 3],
+      ["Applied", "Follow up", 3],
+      ["Applied", "Coding Challenge", 10],
+      ["Coding Challenge", "Phone screen", 5],
+      ["Coding Challenge", "Denied", 3],
+      ["Coding Challenge", "Follow up", 1],
+      ["Phone screen", "On-site", 4],
+      ["Phone screen", "Offer", 3],
+      ["Follow up", "Denied", 2],
+      ["On-site", "Offer", 1],
+      ["On-site", "Denied", 1],
+
+      ["Offer", "Accepted", 1],
+
+
+
+    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.Sankey(document.getElementById('sankey_general'));
+    chart.draw(data, options);
+   }
+</script>
+
+
+</body>
+</html>
