@@ -1,0 +1,311 @@
+<html>
+<head>
+  <!-- Load React API -->
+  <script src= "https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- Load React DOM-->
+  <script src= "https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- Load Babel Compiler -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <style>
+    /* color:
+    https://i.pinimg.com/originals/03/26/48/032648955210654260930079c21d37d4.jpg
+    */
+  .flex-container {
+    display: flex;
+    background-color: #f1f1f1;
+  }
+
+  .flex-container > div {
+    background-color: #B6E3DC;
+    margin: 0px;
+    padding: 5px;
+  }
+
+  .flex-container > div > span {
+      display: inline-block;
+      padding: 2.5px;
+  }
+
+  input {display: block !important; padding: 0 !important; margin: 0 !important; border: 0 !important; width: 100% !important; border-radius: 0 !important; line-height: 1 !important;}
+  td {margin: 0 !important; padding: 0 !important;}
+
+  input {display: block !important; padding: 0 !important; margin: 0 !important; border: 0 !important; width: 100% !important; border-radius: 0 !important; line-height: 1 !important;}
+
+  </style>
+  <script type="text/javascript">
+
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+
+//// ================
+// https://medium.com/@justintulk/react-anti-patterns-props-in-initial-state-28687846cc2e
+class Jobs extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      jobs: props.data.items
+      //jobs: [{ id: "" }]
+    };
+  }
+
+  handleAddJob = () => {
+    this.setState({
+      //jobs: this.state.jobs.concat([{ name: "" }])
+
+      jobs: this.state.jobs.concat([
+          {"key": parseInt(generateKey()),
+           "company": "",
+           "position": "",
+           "next_steps": []
+         }])
+    });
+    console.log(this.state);
+  };
+  //https://www.robinwieruch.de/react-state-array-add-update-remove/
+
+
+  handleRemoveJob = key => () => {
+    //var index = this.state.jobs.indexOf(items)
+    console.log(this.state.jobs.filter((item, j) => item.key !== key) )
+    this.setState({
+      //shareholders: this.state.shareholders.filter((s, sidx) => idx !== sidx)
+      //next_steps: this.state.next_steps.splice(idx, 1)
+      jobs: this.state.jobs.filter((item, j) => item.key !== key)
+    });
+  };
+
+  //<JobRow
+  //    company={items.company}
+  //    position={items.position}
+  //    next_steps={items.next_steps}/>
+  render() {
+    return (
+    <div>
+    <h4>Jobs Applied</h4>
+
+      {this.state.jobs.map((items =>
+      <div key_id={items.key}>
+        <JobRow
+            key_id={items.key}
+            company={items.company}
+            position={items.position}
+            next_steps={items.next_steps}/>
+        <button
+          type="button"
+          onClick={this.handleRemoveJob(items.key)} //.bind(this)
+          className="small">
+          xx
+        </button>
+      </div>
+    ))
+    }
+
+    <button
+      type="button"
+      onClick={this.handleAddJob}
+      className="small">
+      Add New Job
+    </button>
+    </div>
+  )
+  };
+}
+// ===========
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+const generateKey = () => {
+    return `${ new Date().getTime() }`;
+}
+
+// ===========
+//https://stackoverflow.com/questions/50147840/how-to-format-and-display-json-data-using-array-map-in-reactjs
+class JobRow extends React.Component {
+  constructor(props) {
+    super(props);
+    //key_temp = props.key == 0 ? parseInt(generateKey()) : props.key
+    console.log(props.key_id)
+    this.state = {
+      key_id: props.key_id, //props.key == 0 ? parseInt(generateKey()) : props.key,
+      company: props.company,
+      position: props.position,
+      next_steps: props.next_steps,
+    };
+  }
+
+  updatePostings = () => {
+    console.log("asfd")
+    fetch('http://httpbin.org/post', {
+      method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      body: JSON.stringify({
+        company: this.state.company,
+        position: this.state.position,
+        next_steps: this.state.next_steps,
+        key_id: this.state.key_id
+      })
+    }).then((response) => response.json())
+    .then((responseData) => {
+      console.log(responseData);
+      return responseData;
+    })
+    .catch(error => console.warn(error));
+  }
+
+  handleAddField = () => {
+    console.log("State key_id", this.state.key_id)
+    this.setState({
+      next_steps: this.state.next_steps.concat("")
+    });
+    setInterval(this.updatePostings, 5000);
+
+  };
+
+  handleRemoveField = idx => () => {
+    this.setState({
+      next_steps: this.state.next_steps.filter((s, sidx) => idx !== sidx)
+    });
+    //setInterval(updatePostings, 10000);
+  };
+
+  changeTextCompany = evt => {
+        this.setState(
+            {company: evt.target.value}
+        );
+        //setInterval(updatePostings, 10000);
+    }
+
+  changeTextPosition = evt => {
+      this.setState({ position: evt.target.value });
+      //setInterval(updatePostings, 10000);
+    };
+// This was really useful here https://goshakkk.name/array-form-inputs/
+  changeTextNext_Steps = id => evt => {
+      var l = [...this.state.next_steps]
+      l[id] = evt.target.value;
+      const newShareholders = this.state.next_steps.map((shareholder, sidx) => {
+        if (id !== sidx) return shareholder;
+        return [ evt.target.value ];
+      });
+      this.setState({ next_steps: newShareholders });
+      //console.log(this.state.next_steps)
+      //setInterval(updatePostings, 10000);
+    };
+
+  render() {
+    return (
+    <div>
+        <div class="flex-container">
+          <div class="inner_flex">
+            <span>
+              <input type="text" class="form-control" placeholder="Company" value={this.state.company} id="comapny_input" onChange={this.changeTextCompany}/>
+            </span>
+            <span>
+              <input type="text" class="form-control" placeholder="Position" value={this.state.position} id="position_input" onChange={this.changeTextPosition}/>
+            </span>
+            <span>
+              <select id="position_type">
+                <option value="fulltime">Fulltime</option>
+                <option value="intern">Co-Op/Internship</option>
+              </select>
+            </span>
+            </div>
+
+        {this.state.next_steps.map((step, idx) => (
+            <span>
+            <button
+              type="button"
+              onClick={this.handleRemoveField(idx)}
+              className="small"
+            >
+              -
+            </button>
+            <input placeholder="Next State" value={step} onChange={this.changeTextNext_Steps(idx)}/>
+            </span>
+
+        ))}
+
+      <button
+        type="button"
+        onClick={this.handleAddField}
+        className="small">
+        Next Stage
+      </button>
+    </div>
+        </div>
+
+    );
+  }
+}
+var json = {"items":[
+    {"key":132, "company":"Google", "position": "SE Intern", "next_steps": ["Coding", "phone"]
+    },
+
+
+    {"key":133, "company":"FaceBook", "position": "DS Intern", "next_steps": ["Onsite", "Offer"]
+    },
+    {"key":134, "company":"twitter", "position": "architectre", "next_steps": ["coffeechat", "denail"]
+    },
+    {"key":135, "company":"oracle", "position": "sleeping", "next_steps": []
+    }
+  ]}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<Jobs data={json}/>, rootElement);
+
+
+/*
+  class ShoppingList extends React.Component {
+    render() {
+      return (
+        <div className="shopping-list">
+          <h1>Shopping List for {this.props.name}</h1>
+          <ul>
+            <li>Instagram</li>
+            <li>WhatsApp</li>
+            <li>Oculus</li>
+          </ul>
+        </div>
+      );
+    }
+  }
+  */
+
+/*
+JSON SCHEMA FUN:
+{"items":[
+    { "company":"Google", "position": "SE Intern", "next_steps": { "step_name": "coding", "next_steps": {"step_name": "phone"}}
+    },
+    { "company":"Facebook", "position": "DS Intern", "next_steps": { "step_name": "onsite", "next_steps": {"step_name": "offer"}}
+    },
+  ]}
+
+
+Better idea:
+{"items":[
+    { "company":"Google", "position": "SE Intern", "next_steps": ["Coding", "phone"]
+    },
+
+
+    { "company":"Google", "position": "SE Intern", "next_steps": ["Coding", "phone"]
+    }
+  ]}
+
+*/
+
+</script>
+</body>
+</html>

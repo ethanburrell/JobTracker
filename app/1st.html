@@ -1,0 +1,90 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<!-- Load React API -->
+<script src= "https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<!-- Load React DOM-->
+<script src= "https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<!-- Load Babel Compiler -->
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+  <style>
+  /* color:
+  https://i.pinimg.com/originals/03/26/48/032648955210654260930079c21d37d4.jpg
+  */
+.flex-container {
+  display: flex;
+  background-color: #f1f1f1;
+}
+
+.flex-container > div {
+  background-color: #B6E3DC;
+  margin: 0px;
+  padding: 5px;
+}
+
+.flex-container > div > span {
+    display: inline-block;
+}
+
+input {display: block !important; padding: 0 !important; margin: 0 !important; border: 0 !important; width: 100% !important; border-radius: 0 !important; line-height: 1 !important;}
+td {margin: 0 !important; padding: 0 !important;}
+
+input {display: block !important; padding: 0 !important; margin: 0 !important; border: 0 !important; width: 100% !important; border-radius: 0 !important; line-height: 1 !important;}
+
+</style>
+</head>
+<body>
+  <!--
+  <table class="table table-bordered table-condensed">
+    <tbody>
+      <tr>
+        <td><input type="text" class="form-control" placeholder="Company"/></td>
+      </tr>
+    </tbody>
+  </table>
+-->
+  <div class="flex-container">
+    <div class="inner_flex">
+      <span>
+        <input type="text" class="form-control" placeholder="Company" id="comapny_input"/>
+      </span>
+      <span>
+        <input type="text" class="form-control" placeholder="Position" oninput="selectJobType()" id="position_input"/>
+      </span>
+      <span>
+        <select id="position_type">
+          <option value="fulltime">Fulltime</option>
+          <option value="intern">Co-Op/Internship</option>
+        </select>
+      </span>
+    </div>
+    <span>
+      <button onlick="addNext()"> -> </button>
+    </span>
+  </div>
+
+
+<script>
+// Changes the selection of the select statement based on the text in the job type box
+function selectJobType() {
+  job_position = document.getElementById("position_input").value.toLowerCase();
+
+  substrings = ["intern", "internship", "coop", "co-op", "co op"]
+  if (substrings.some(word => job_position.includes(word))) {
+    document.getElementById("position_type").value = "intern";
+  }
+}
+
+function addNext() {
+    div = document.getElementById("inner_flex")
+
+}
+
+
+</script>
+</body>
+</html>
