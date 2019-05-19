@@ -61,10 +61,10 @@ class Jobs extends React.Component {
       //jobs: this.state.jobs.concat([{ name: "" }])
 
       jobs: this.state.jobs.concat([
-          {"key": parseInt(generateKey()),
-           "company": "",
-           "position": "",
-           "next_steps": []
+          {key_id: parseInt(generateKey()),
+           company: "",
+           position: "",
+           next_steps: []
          }])
     });
     console.log(this.state);
@@ -74,11 +74,11 @@ class Jobs extends React.Component {
 
   handleRemoveJob = key => () => {
     //var index = this.state.jobs.indexOf(items)
-    console.log(this.state.jobs.filter((item, j) => item.key !== key) )
+    console.log(this.state.jobs.filter((item, j) => item.key_id !== key) )
     this.setState({
       //shareholders: this.state.shareholders.filter((s, sidx) => idx !== sidx)
       //next_steps: this.state.next_steps.splice(idx, 1)
-      jobs: this.state.jobs.filter((item, j) => item.key !== key)
+      jobs: this.state.jobs.filter((item, j) => item.key_id !== key)
     });
   };
 
@@ -92,15 +92,16 @@ class Jobs extends React.Component {
     <h4>Jobs Applied</h4>
 
       {this.state.jobs.map((items =>
-      <div key_id={items.key}>
+
+      <div key={items.key_id}>
         <JobRow
-            key_id={items.key}
+            key_id={items.key_id}
             company={items.company}
             position={items.position}
             next_steps={items.next_steps}/>
         <button
           type="button"
-          onClick={this.handleRemoveJob(items.key)} //.bind(this)
+          onClick={this.handleRemoveJob(items.key_id)} //.bind(this)
           className="small">
           xx
         </button>
@@ -251,15 +252,15 @@ class JobRow extends React.Component {
   }
 }
 var json = {"items":[
-    {"key":132, "company":"Google", "position": "SE Intern", "next_steps": ["Coding", "phone"]
+    {"key_id":132, "company":"Google", "position": "SE Intern", "next_steps": ["Coding", "phone"]
     },
 
 
-    {"key":133, "company":"FaceBook", "position": "DS Intern", "next_steps": ["Onsite", "Offer"]
+    {"key_id":133, "company":"FaceBook", "position": "DS Intern", "next_steps": ["Onsite", "Offer"]
     },
-    {"key":134, "company":"twitter", "position": "architectre", "next_steps": ["coffeechat", "denail"]
+    {"key_id":134, "company":"twitter", "position": "architectre", "next_steps": ["coffeechat", "denail"]
     },
-    {"key":135, "company":"oracle", "position": "sleeping", "next_steps": []
+    {"key_id":135, "company":"oracle", "position": "sleeping", "next_steps": []
     }
   ]}
 
