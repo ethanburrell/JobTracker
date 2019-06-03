@@ -1,0 +1,38 @@
+# Credentials you get from registering a new application
+client_id = '125069500182-rss8qgel94h6u3as9vtobuhvnilioq3r.apps.googleusercontent.com'
+client_secret = 'ESRcT2283QlVou54alm83AJE'
+redirect_uri = 'https://ethanburrell.github.io/JobTracker/1st.html	'
+
+# OAuth endpoints given in the Google API documentation
+authorization_base_url = "https://accounts.google.com/o/oauth2/v2/auth"
+token_url = "https://www.googleapis.com/oauth2/v4/token"
+scope = [
+     "email",
+     "profile"
+ ]
+#"https://www.googleapis.com/auth/userinfo.email",
+#"https://www.googleapis.com/auth/userinfo.profile"
+
+from requests_oauthlib import OAuth2Session
+google = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri)
+
+# Redirect user to Google for authorization
+authorization_url, state = google.authorization_url(authorization_base_url,
+     # offline for refresh token
+     # force to always make user click authorize
+     access_type="offline", prompt="select_account")
+print('Please go here and authorize,', authorization_url)
+
+
+string_code = '4%2FUQGu6QxJZI0I11a_DTOZy0Jd8WUnacvTSCPEXnk6jbEOD_RW4knAjJnPY1wo_Wt7cgCEf3nBRrNVs2p5OSRFvV8'
+string = 'https://ethanburrell.github.io/JobTracker/1st.html?state=FBa2kVRHJ0fkWjW8dnvncoepSI27Lk&code=4/UQG3ZskUiGHZpKMQhfS_unawKxYUZc_kMCpaGoebIghFdogromzgBdvmmFZkRE7POKfOm-RsfnDs5SKwoa0lOXE&scope=email%20profile%20https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile'
+# Get the authorization verifier code from the callback url
+redirect_response = raw_input(string)
+
+# Fetch the access token
+google.fetch_token(token_url, client_secret=client_secret,
+         authorization_response=redirect_response)
+
+# Fetch a protected resource, i.e. user profile
+r = google.get('https://www.googleapis.com/oauth2/v1/userinfo')
+print(r.content)

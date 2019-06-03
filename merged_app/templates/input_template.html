@@ -34,11 +34,16 @@
   input {display: block !important; padding: 0 !important; margin: 0 !important; border: 0 !important; width: 100% !important; border-radius: 0 !important; line-height: 1 !important;}
 
   </style>
-  <script type="text/javascript">
 
-  </script>
 </head>
 <body>
+  <a href="http://127.0.0.1:5000/viz"> viz </a>
+  <div id="content" bar="{{ job_input }}"></div>
+  <script type="text/javascript">
+    //var job_data = { job_input }
+    //console.log({ job_input })
+    //console.log("jd", job_data)
+  </script>
   <div id="root"></div>
 
   <script type="text/babel">
@@ -49,10 +54,14 @@
 class Jobs extends React.Component {
   constructor(props) {
     super(props);
-    var list = Object.keys(json2["items"])
+    //var list = Object.keys(this.props.items)
+    console.log("probs", props)
+    console.log("items", props.data.items)
+    //console.log(Object.keys(props["items"]))
+    var list = Object.keys(props.data["items"]).map((i => props.data["items"][i]))
+    //console.log("list", list)
     this.state = {
-      name: "",
-      jobs: Object.keys(json2["items"]).map((i => json2["items"][i]))
+      jobs: list
       //jobs: [{ id: "" }]
     };
   }
@@ -75,12 +84,29 @@ class Jobs extends React.Component {
 
   handleRemoveJob = key => () => {
     //var index = this.state.jobs.indexOf(items)
+    var temp_key = key.toString();
     console.log(this.state.jobs.filter((item, j) => item.key_id !== key) )
     this.setState({
       //shareholders: this.state.shareholders.filter((s, sidx) => idx !== sidx)
       //next_steps: this.state.next_steps.splice(idx, 1)
       jobs: this.state.jobs.filter((item, j) => item.key_id !== key)
     });
+
+    fetch('http://127.0.0.1:5000/user/remove_job', {
+      method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body:   JSON.stringify({
+          "key_id": temp_key
+        })
+    }).then((response) => response.json())
+    .then((responseData) => {
+      console.log(responseData);
+      return responseData;
+    })
+    .catch(error => console.warn(error));
   };
 
   //<JobRow
@@ -144,21 +170,29 @@ class JobRow extends React.Component {
       next_steps: props.next_steps,
     };
   }
+  /*
+  this.state.key_id: {"key_id": this.state.key_id,
+            "company": this.state.company,
+            "position": this.state.position,
+            "next_steps": this.state.key_id
+            }
+  })
+  */
 
   updatePostings = () => {
     console.log("asfd")
-    fetch('http://httpbin.org/post', {
+    fetch('http://127.0.0.1:5000/user/update_job', {
       method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-      body: JSON.stringify({
-        company: this.state.company,
-        position: this.state.position,
-        next_steps: this.state.next_steps,
-        key_id: this.state.key_id
-      })
+
+      body:   JSON.stringify(
+        {"key_id": this.state.key_id.toString(),
+                    "company": this.state.company,
+                    "position": this.state.position,
+                    "next_steps": this.state.next_steps})
     }).then((response) => response.json())
     .then((responseData) => {
       console.log(responseData);
@@ -172,7 +206,8 @@ class JobRow extends React.Component {
     this.setState({
       next_steps: this.state.next_steps.concat("")
     });
-    setInterval(this.updatePostings, 5000);
+    //setInterval(this.updatePostings, 5000);
+    this.updatePostings()
 
   };
 
@@ -277,7 +312,8 @@ var json = {
     }}
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<Jobs data={json2}/>, rootElement);
+ReactDOM.render(<Jobs data={  JSON.parse(document.getElementById("content").getAttribute("bar")) }/>, rootElement);
+console.log("The data", JSON.parse(document.getElementById("content").getAttribute("bar")))
 
 
 /*
